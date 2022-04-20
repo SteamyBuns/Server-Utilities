@@ -43,4 +43,12 @@ module.exports = bot
 //     member.guild.channels.cache.get(welcomeChannelId).send(`<@${member.id}> Welcome to the server!`)
 // })
 
+
+client.slashcommands = new Discord.Collection()
+
+client.loadSlashCommands = (bot, reload) => require("./handlers/slashcommands")(bot, reload)
+client.loadSlashCommands(bot, false)
+
+
+
 client.login(process.env.TOKEN)
