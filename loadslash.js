@@ -12,17 +12,21 @@ let bot = {
 
 
 
-const guildID = "870419411297767424"
+const guildId = "870419411297767424"
 
-client.slashcommands = new Discord.Collection()
+client.slashcommands = new Discord.Collection() 
 
 client.loadSlashCommands = (bot, reload) => require("./handlers/slashcommands")(bot, reload)
 client.loadSlashCommands(bot, false)
 
-client.on("ready", () => {
-    const guild = client.guilds.cache.get(guildID)
+client.on("ready", async () => {
+    const guild = client.guilds.cache.get(guildId)
     if (!guild)
-    return console.error("Target guild not found")
+        return console.error("Target guild not found")
+    
+    await guild.commands.set([...client.slashcommands.values()])
+    console.log(`Successfully loaded in ${client.slashcommands.size}`)
+    process.exit(0)
 })
 
 client.login(process.env.TOKEN)
